@@ -10,10 +10,10 @@ interface Props {
   };
 }
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductBySlugPage({ params }: Props) {
 
   const { slug } = await params;
-  var product = initialData.products.find(prod => prod.slug === slug)
+  const product = initialData.products.find(prod => prod.slug === slug)
 
   if (!product) {
     notFound();

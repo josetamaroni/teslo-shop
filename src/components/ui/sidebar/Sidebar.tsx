@@ -1,6 +1,15 @@
 'use client'
+
 import Link from 'next/link';
-import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from 'react-icons/io5';
+import { IoCloseOutline, 
+  IoLogInOutline, 
+  IoLogOutOutline, 
+  IoPeopleOutline, 
+  IoPersonOutline, 
+  IoSearchOutline, 
+  IoShirtOutline, 
+  IoTicketOutline 
+} from 'react-icons/io5';
 
 import { useUIStore } from '@/store';
 import clsx from 'clsx';
@@ -59,7 +68,7 @@ export const Sidebar = () => {
           <span className='ml-3 text-xl'>Orders</span>
         </Link>
 
-        <Link href='/' className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+        <Link href='/auth/login' className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
           <IoLogInOutline size={30} />
           <span className='ml-3 text-xl'>Sign in</span>
         </Link>
