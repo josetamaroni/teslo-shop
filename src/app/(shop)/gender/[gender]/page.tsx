@@ -29,9 +29,14 @@ export default async function GenderPage({ params, searchParams }: Props) {
     notFound();
   }
 
-  const page = await searchParams.page ? parseInt(!!searchParams.page ? searchParams.page : '1') : 1;
-
-  const { products, totalPages } = await getPaginationProductsWithImages({ page, gender });
+  const page = await searchParams;
+  let pageNumber;
+  if (page === undefined) {
+    pageNumber = 1;
+  } else if (typeof page == 'string') {
+    pageNumber = parseInt(page);
+  }
+  const { products, totalPages } = await getPaginationProductsWithImages({ page: pageNumber, gender });
 
   if( products.length === 0 ) {
     redirect(`/gender/${gender}`);

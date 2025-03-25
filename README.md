@@ -15,16 +15,9 @@ Es un ecommerce realizado con Next.js - Prisma - Postgres Sql
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 ## Correr en Prod
-
 
 
 

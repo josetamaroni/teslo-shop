@@ -3,10 +3,12 @@ import "./globals.css";
 import { geistMono, geistSans } from "@/config/fonts";
 
 
-
 export const metadata: Metadata = {
-  title: "Teslo | Shop",
-  description: "Una tienda de productos virtuales",
+  title: {
+    template: "%s - Teslo | Shop",
+    default: "Home - Teslo | Shop",
+  },
+  description: "A virtual product store",
 };
 
 export default function RootLayout({

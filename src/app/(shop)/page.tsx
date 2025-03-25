@@ -13,12 +13,19 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
 
-    const page = await searchParams.page ? parseInt( !!searchParams.page ? searchParams.page:'1' ) : 1;
+    const { page } = await searchParams;
 
-    const { products, totalPages } = await getPaginationProductsWithImages({ page });
+    let pageNumber;
+    if (page === undefined) {
+        pageNumber = 1;
+    } else if (typeof page == 'string') {
+        pageNumber = parseInt(page);
+    }
 
-    if( products.length === 0 ) {
-       redirect("/");
+    const { products, totalPages } = await getPaginationProductsWithImages({ page: pageNumber });
+
+    if (products.length === 0) {
+        redirect("/");
     }
 
     return (
