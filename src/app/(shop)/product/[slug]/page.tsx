@@ -3,8 +3,9 @@ export const revalidate = 604800; // 7 days in cache
 import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductBySlug } from "@/actions";
-import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from "@/components";
+import { ProductMobileSlideShow, ProductSlideShow, StockLabel } from "@/components";
 import { titleFont } from "@/config/fonts";
+import { AddToCart } from './ui/AddToCart';
 
 interface Props {
   params: {
@@ -14,10 +15,10 @@ interface Props {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  // parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const slug = params.slug;
+  const { slug } = await params;
 
   // fetch data
   const product = await getProductBySlug(slug);
@@ -74,21 +75,11 @@ export default async function ProductBySlugPage({ params }: Props) {
           ${product.price}
         </p>
 
-        {/* Selector de Tallas */}
-        <SizeSelector availableSizes={product.sizes} selectedSize="L" />
-
-
-        {/* Selector de cantidad */}
-        <QuantitySelector quantity={1} />
-
         {/* Stock */}
         <StockLabel slug={product.slug} />
 
-        {/* boton */}
-        {/* //TODO: Falta que tome las clases globales */}
-        <button className="btn-primary my-5">
-          Add to Cart
-        </button>
+        {/* Selector de cantidad y botón de agregar al carrito*/}
+        <AddToCart product={product}/>
 
         {/* Descripcion */}
         <h3 className="text-sm font-bold">Description</h3>
