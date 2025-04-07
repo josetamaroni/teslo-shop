@@ -50,11 +50,11 @@ export const ProductInCart = () => {
                                 onQuantityChanged={quantity => updateProductQuantity(product, quantity)}
                             />
 
-                            <button
-                                className="mt-3 text-red-600"
-                                onClick={() => removeProduct(product)}>
-                                <IoTrashOutline size={20} />
-                            </button>
+                            <div className="pt-4 flex justify-end text-red-600">
+                                <div className='cursor-pointer'>
+                                    <IoTrashOutline size={20} onClick={() => removeProduct(product)} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))

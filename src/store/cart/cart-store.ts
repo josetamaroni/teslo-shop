@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { CartProduct } from "@/interfaces";
-import { Product } from '../../interfaces/product.interface';
 
 interface State {
     cart: CartProduct[];
@@ -9,6 +8,12 @@ interface State {
     getTotalItems: () => number;
     updateProductQuantity: (Product: CartProduct, quantity: number) => void;
     removeProduct: (Product: CartProduct) => void;
+    getSummaryInformation: () => {
+        itemsInCart: number;
+        subtotal: number;
+        taxes: number;
+        total: number;
+    };
 }
 
 export const useCartStore = create<State>()(
@@ -17,6 +22,24 @@ export const useCartStore = create<State>()(
             cart: [],
 
             // methods
+            getTotalItems: () => {
+                const { cart } = get();
+                return cart.reduce((total, product) => total + product.quantity, 0);
+            },
+            getSummaryInformation: () => {
+                const { cart } = get();
+                const itemsInCart = cart.reduce((total, product) => total + product.quantity, 0);
+                const subtotal = cart.reduce((subTotal, product) => subTotal + (product.price * product.quantity), 0);
+                const taxes = subtotal * 0.15;
+                const total = subtotal + taxes;
+
+                return {
+                    itemsInCart,
+                    subtotal,
+                    taxes,
+                    total,
+                };
+            },
             addProductToCart: (product: CartProduct) => {
                 const { cart } = get();
                 //* 1. verificar si el producto ya existe en el carrito
@@ -34,10 +57,6 @@ export const useCartStore = create<State>()(
                     return p;
                 });
                 set({ cart: updatedCart });
-            },
-            getTotalItems: () => {
-                const { cart } = get();
-                return cart.reduce((total, product) => total + product.quantity, 0);
             },
             updateProductQuantity: (product: CartProduct, quantity: number) => {
                 const { cart } = get();

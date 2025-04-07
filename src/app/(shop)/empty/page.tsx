@@ -7,10 +7,10 @@ export default function EmptyPage() {
       <IoCartOutline size={80} className="mx-5 text-primary" />
 
       <div className="flex flex-col items-center">
-        <h1 className="text-xl font-semibold">Tu carrito esta vacío</h1>
+        <h1 className="text-xl font-semibold">Your cart is empty</h1>
 
         <Link href='/' className="underline hover:text-primary flex">
-          <IoArrowBack size={25} className="mr-2"/> Regresar
+          <IoArrowBack size={25} className="mr-2"/> Back
         </Link>
       </div>
     </div>
