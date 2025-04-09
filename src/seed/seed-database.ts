@@ -6,15 +6,16 @@ async function main() {
 
     //? 1. Borrar registros previos
     await Promise.all([
+        await prisma.user.deleteMany(),
         await prisma.productImage.deleteMany(),
         await prisma.product.deleteMany(),
         await prisma.category.deleteMany()
     ])
 
     //? 2. Create Categories
-    const { categories, products } = initialData;
-   
-    const categoriesData = categories.map( (name) => ({ name }))
+    const { categories, products, users } = initialData;
+
+    const categoriesData = categories.map((name) => ({ name }))
     await prisma.category.createMany({
         data: categoriesData
     })
@@ -49,9 +50,16 @@ async function main() {
         });
     });
 
+    //? 4. Create Users
+    //! Porque toma la hora con 3 horas de diferencia?
+    await prisma.user.createMany({
+        data: users
+    })
 
     console.log('Seed ejecutado correctamente..')
 }
+
+
 
 (() => {
     if (process.env.NODE_ENV === 'production') return;

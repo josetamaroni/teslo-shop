@@ -1,5 +1,5 @@
 # Descripción
-Es un ecommerce realizado con Next.js - Prisma - Postgres Sql
+Es un ecommerce realizado con Next.js - Prisma - Postgres Sql - Auth Next - Zod - bcryptjs
 
 
 ## Correr en Dev
