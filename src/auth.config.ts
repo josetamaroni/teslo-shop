@@ -4,6 +4,17 @@ import { z } from 'zod';
 import prisma from './lib/prisma';
 import bcryptjs from 'bcryptjs';
 
+const protectedRoutes = [
+    '/checkout/address',
+    '/checkout',
+    '/profile',
+    '/orders'
+];
+const authRoutes = [
+    '/auth/login',
+    '/auth/new-account',
+];
+// const authRoutes = ['/prueba']
 export const authConfig: NextAuthConfig = {
     pages: {
         signIn: '/auth/login',
@@ -12,6 +23,22 @@ export const authConfig: NextAuthConfig = {
         // error: '/auth/error',
     },
     callbacks: {
+        authorized({ auth, request: { nextUrl } }) {
+            console.log('Probando', auth)
+            const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
+            const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+            const isLoggedIn = !!auth?.user;
+
+            if (isAuthRoute && isLoggedIn) {
+                return Response.redirect(new URL('/', nextUrl));
+            }
+
+            if (isProtectedRoute) {
+                if (isLoggedIn) return true;
+                return Response.redirect(new URL(`/auth/login?origin=${nextUrl.pathname}`, nextUrl));
+            }
+            return true;
+        },
         jwt({ token, user }) {
             if (user) {
                 token.data = user;

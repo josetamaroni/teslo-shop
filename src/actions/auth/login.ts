@@ -16,7 +16,7 @@ export async function authenticate(
             ...Object.fromEntries(formData),
             redirect: false, // Deshabilitar redirección automática
         });
-        
+
         return 'Success';
     } catch (error) {
         console.error('Error', error);
@@ -31,5 +31,23 @@ export async function authenticate(
             return 'Something went wrong.';
         }
         // throw error;
+    }
+}
+
+export async function login(email: string, password: string) {
+    try {
+        await signIn('credentials', {
+            email,
+            password
+        });
+        return {
+            ok: true
+        }
+    } catch (error) {
+        // Usar un Logger
+        console.log(error)
+        return {
+            ok: false
+        }
     }
 }

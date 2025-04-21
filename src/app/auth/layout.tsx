@@ -1,5 +1,5 @@
-import { auth } from "@/auth.config";
-import { redirect } from "next/navigation";
+// import { auth } from "@/auth.config"; // Se comenta porque se uso el middleware authorized
+// import { redirect } from "next/navigation"; // Se comenta porque se uso el middleware authorized
 
 export default async function AuthLayout({
 	children
@@ -7,11 +7,11 @@ export default async function AuthLayout({
 	children: React.ReactNode;
 }) {
 
-	const session = await auth();
-
-	if (session?.user) {
-		redirect('/');
-	}
+	// Se comenta porque se uso el middleware authorized
+	// const session = await auth();
+	// if (session?.user) {
+	// 	redirect('/');
+	// }
 
 	return (
 		<main className="flex justify-center">

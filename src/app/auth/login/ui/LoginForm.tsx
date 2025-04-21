@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 
@@ -11,15 +11,14 @@ import clsx from 'clsx';
 
 export const LoginForm = () => {
 
-  // const searchParams = useSearchParams();
-  // const callbackUrl = searchParams.get('callbackUrl') || '/';
-  // const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = searchParams.get('origin') || '/';
   const [state, formAction, isPending] = useActionState(authenticate, undefined);
 
-  // Usar un useEffect para manejar el state y redireccionar a callbackUrl
+  // Usar un useEffect para manejar el state y redireccionar a origin
   useEffect(() => {
     if (state === 'Success') {
-      // router.replace('/');
+      if (!!params) return window.location.replace(params);
       window.location.href = '/';
     }
   }, [state]);

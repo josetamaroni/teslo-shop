@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs";
-import { create } from 'zustand';
 
 interface SeedProduct {
     description: string;
