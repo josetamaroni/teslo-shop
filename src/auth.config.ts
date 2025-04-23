@@ -24,7 +24,6 @@ export const authConfig: NextAuthConfig = {
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
-            console.log('Probando', auth)
             const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
             const isAuthRoute = authRoutes.includes(nextUrl.pathname);
             const isLoggedIn = !!auth?.user;

@@ -85,7 +85,7 @@ export const RegisterForm = () => {
 
             {errorMessage && <span className='text-red-600'>{errorMessage}</span>}
 
-            <button className="btn-primary">
+            <button type="submit" className="btn-primary">
                 Registrarse
             </button>
 

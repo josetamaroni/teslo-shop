@@ -31,14 +31,13 @@ export const Sidebar = () => {
     // Sincroniza isAuthenticated con session
     useEffect(() => {
         setIsAuthenticated(!!session?.user);
-console.log(isAuthenticated)
     }, [session]);
 
     const onLogout = async () => {
         setIsAuthenticated(false); // Actualiza el estado local.
         closeMenu();
         const l = await logout();
-console.log('L:', l)
+        console.log('L:', l)
     };
 
 

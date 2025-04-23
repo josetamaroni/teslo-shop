@@ -1,5 +1,15 @@
-# Descripción
-Es un ecommerce realizado con Next.js - Prisma - Postgres Sql - Auth Next - Zod - bcryptjs - Reac Hook Form
+# Teslo Shop 
+
+## Tabla de Contenido
+- [Teslo Shop](#teslo-shop)
+  - [Tabla de Contenido](#tabla-de-contenido)
+  - [Descripción](#descripción)
+  - [Correr en Dev](#correr-en-dev)
+  - [Correr en Prod](#correr-en-prod)
+  - [Librerías](#librerías)
+
+## Descripción
+    Es un ecommerce realizado con Next.js - Prisma - PostgreSql - Auth Next - Zustand - Zod - bcryptjs - Reac Hook Form
 
 
 ## Correr en Dev
@@ -21,5 +31,5 @@ npm run dev
 
 
 
-## Usa SlideShow 
+## Librerías 
 - [Swiper](https://swiperjs.com/)
