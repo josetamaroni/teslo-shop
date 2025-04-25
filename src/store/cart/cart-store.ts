@@ -12,8 +12,10 @@ interface State {
         itemsInCart: number;
         subtotal: number;
         taxes: number;
+        shipping: number;
         total: number;
     };
+    clearCart: () => void;
 }
 
 export const useCartStore = create<State>()(
@@ -31,12 +33,14 @@ export const useCartStore = create<State>()(
                 const itemsInCart = cart.reduce((total, product) => total + product.quantity, 0);
                 const subtotal = cart.reduce((subTotal, product) => subTotal + (product.price * product.quantity), 0);
                 const taxes = subtotal * 0.15;
-                const total = subtotal + taxes;
+                const shipping = subtotal * 0.21;
+                const total = subtotal + taxes + shipping;
 
                 return {
                     itemsInCart,
                     subtotal,
                     taxes,
+                    shipping,
                     total,
                 };
             },
@@ -72,6 +76,9 @@ export const useCartStore = create<State>()(
                 const { cart } = get();
                 const updatedCart = cart.filter((p) => !(p.id === Product.id && p.size === Product.size));
                 set({ cart: updatedCart });
+            },
+            clearCart: () => {
+                set({ cart: [] });
             },
         })
         ,

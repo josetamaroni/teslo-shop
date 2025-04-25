@@ -1,8 +1,14 @@
 'use client'
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import clsx from 'clsx';
 import {
+    IoCartOutline,
     IoCloseOutline,
+    IoGridOutline,
+    IoHeartOutline,
     IoLogInOutline,
     IoLogOutOutline,
     IoPeopleOutline,
@@ -13,10 +19,7 @@ import {
 } from 'react-icons/io5';
 
 import { useUIStore } from '@/store';
-import clsx from 'clsx';
 import { logout } from '@/actions';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
 
 
 export const Sidebar = () => {
@@ -91,6 +94,10 @@ export const Sidebar = () => {
                                 <IoTicketOutline size={25} />
                                 <span className='ml-3 text-xl'>Orders</span>
                             </Link>
+                            <Link href='/favorite' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                                <IoHeartOutline size={25} />
+                                <span className='ml-3 text-xl'>Favorite</span>
+                            </Link>
                             <button onClick={() => onLogout()} className='flex w-full items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
                                 <IoLogOutOutline size={25} />
                                 <span className='ml-3 text-xl'>Sign out</span>
@@ -111,13 +118,18 @@ export const Sidebar = () => {
                             {/* Line separator */}
                             <div className='w-full h-px bg-gray-200 my-10' />
 
-                            <Link href='/' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                            <Link href='/admin' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                                <IoGridOutline size={25} />
+                                <span className='ml-3 text-xl'>Dashboard</span>
+                            </Link>
+
+                            <Link href='/products' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
                                 <IoShirtOutline size={25} />
                                 <span className='ml-3 text-xl'>Products</span>
                             </Link>
 
-                            <Link href='/' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
-                                <IoTicketOutline size={25} />
+                            <Link href='/orders' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                                <IoCartOutline size={25} />
                                 <span className='ml-3 text-xl'>Orders</span>
                             </Link>
 
