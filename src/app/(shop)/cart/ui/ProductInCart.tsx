@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
-import { QuantitySelector } from '@/components'
+import { ProductImage, QuantitySelector } from '@/components'
 import { useCartStore } from '@/store';
 import { IoTrashOutline } from 'react-icons/io5';
 
@@ -27,8 +27,8 @@ export const ProductInCart = () => {
             {
                 productsInCart.map(product => (
                     <div key={`${product.slug}-${product.size}`} className="flex mb-3">
-                        <Image
-                            src={`/products/${product.image}`}
+                        <ProductImage
+                            src={product.image}
                             // priority={true}
                             width={100}
                             height={100}

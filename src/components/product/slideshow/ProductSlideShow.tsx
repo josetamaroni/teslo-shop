@@ -12,7 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 import './slideshow.css';
-import Image from 'next/image';
+import { ProductImage } from '@/components';
 
 
 interface Props {
@@ -41,18 +41,29 @@ export const ProductSlideShow = ({ images, title, className }: Props) => {
             >
 
                 {
-                    images.map(image => (
-                        <SwiperSlide key={image}>
-                            <Image
+                    (images.length === 0)
+                    ? (
+                        <SwiperSlide>
+                            <ProductImage
                                 width={1024}
                                 height={800}
-                                src={`/products/${image}`}
-                                alt={title}
+                                src=""
+                                alt="No image available"
                                 className='rounded-lg object-fill'
-                                priority={true}
                             />
                         </SwiperSlide>
-
+                    )
+                    :
+                    images.map(image => (
+                        <SwiperSlide key={image}>
+                            <ProductImage
+                                width={1024}
+                                height={800}
+                                src={image}
+                                alt={title}
+                                className='rounded-lg object-fill'
+                            />
+                        </SwiperSlide>
                     ))
                 }
             </Swiper>
@@ -67,18 +78,29 @@ export const ProductSlideShow = ({ images, title, className }: Props) => {
                 className="mySwiper"
             >
                 {
-                    images.map(image => (
-                        <SwiperSlide key={image}>
-                            <Image
+                    (images.length === 0)
+                    ? (
+                        <SwiperSlide>
+                            <ProductImage
                                 width={300}
                                 height={300}
-                                src={`/products/${image}`}
-                                alt={title}
+                                src=""
+                                alt="No image available"
                                 className='rounded-lg object-fill'
-                                priority={true}
                             />
                         </SwiperSlide>
-
+                    )
+                    :
+                    images.map(image => (
+                        <SwiperSlide key={image}>
+                            <ProductImage
+                                width={300}
+                                height={300}
+                                src={image}
+                                alt={title}
+                                className='rounded-lg object-fill'
+                            />
+                        </SwiperSlide>
                     ))
                 }
             </Swiper>

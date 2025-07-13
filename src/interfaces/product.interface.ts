@@ -1,15 +1,18 @@
+import { Category } from "./category.interface";
+
+
 export interface Product {
     id: string;
+    title: string;
     description: string;
-    images: string[];
     inStock: number;
     price: number;
     sizes: Size[];
     slug: string;
-    tags: string[];
-    title: string;
-    //todo type: Category;
+    tags: string[]; 
     gender: Gender;
+    category: Category;
+    images: string[];
 }
 export interface CartProduct {
     id: string;
@@ -23,4 +26,4 @@ export interface CartProduct {
 
 export type Gender = 'men' | 'women' | 'kid' | 'unisex';
 export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
-export type Category = 'shirts' | 'pants' | 'hoodies' | 'hats';
+// export type Category = 'shirts' | 'pants' | 'hoodies' | 'hats';

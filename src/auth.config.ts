@@ -8,7 +8,8 @@ const protectedRoutes = [
     '/checkout/address',
     '/checkout',
     '/profile',
-    '/orders'
+    '/orders',
+    '/admin'
 ];
 const authRoutes = [
     '/auth/login',
@@ -24,7 +25,10 @@ export const authConfig: NextAuthConfig = {
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
-            const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
+            // const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname); // Solo tiene en cuenta la ruta exacta
+
+            // Esto asegura que cualquier subruta dentro de las rutas protegidas también sea considerada protegida.
+            const isProtectedRoute = protectedRoutes.some(route => nextUrl.pathname.startsWith(route)); 
             const isAuthRoute = authRoutes.includes(nextUrl.pathname);
             const isLoggedIn = !!auth?.user;
 

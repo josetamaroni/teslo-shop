@@ -9,7 +9,8 @@
   - [Librerías](#librerías)
 
 ## Descripción
-    Es un ecommerce realizado con Next.js - Prisma - PostgreSql - Auth Next - Zustand - Zod - bcryptjs - Reac Hook Form
+    Es un ecommerce realizado con 
+    Next.js - Prisma - PostgreSql - Auth Next - Zustand - Zod - bcryptjs - Reac Hook Form - react-paypal-js
 
 
 ## Correr en Dev

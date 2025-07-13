@@ -5,11 +5,7 @@ import { Title } from "@/components";
 import { ProductInCart } from "./ui/ProductInCart";
 import { OrderSummary } from "./ui/OrderSummary";
 
-
 export default function CartPage() {
-
-  //TODO: Falta condicion de carrito vacio
-  // redirect('/empty');
 
   return (
     <div className="flex justify-center items-center mb-72 px-5 sm:px-0">

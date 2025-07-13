@@ -38,11 +38,10 @@ export const Sidebar = () => {
 
     const onLogout = async () => {
         setIsAuthenticated(false); // Actualiza el estado local.
+        localStorage.clear(); // Limpia el localStorage.
         closeMenu();
         const l = await logout();
-        console.log('L:', l)
     };
-
 
     return (
         <div>
@@ -123,17 +122,17 @@ export const Sidebar = () => {
                                 <span className='ml-3 text-xl'>Dashboard</span>
                             </Link>
 
-                            <Link href='/products' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                            <Link href='/admin/products' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
                                 <IoShirtOutline size={25} />
                                 <span className='ml-3 text-xl'>Products</span>
                             </Link>
 
-                            <Link href='/orders' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                            <Link href='/admin/orders' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
                                 <IoCartOutline size={25} />
                                 <span className='ml-3 text-xl'>Orders</span>
                             </Link>
 
-                            <Link href='/' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
+                            <Link href='/admin/users' onClick={() => closeMenu()} className='flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all'>
                                 <IoPeopleOutline size={25} />
                                 <span className='ml-3 text-xl'>Users</span>
                             </Link>

@@ -40,7 +40,16 @@ model Category {
   name    String    @unique
   Product Product[]
 }
+// Todo: crear tabla para las tallas
+// model Size {
+//   id   String @id
+//   name String @unique
+// }
 
+// model Gender {
+//   id   String @id
+//   name String @unique
+// }
 model Product {
   id          String   @id @default(uuid())
   title       String
@@ -132,8 +141,10 @@ model Order {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  OrderItem      OrderItem[]
-  OrderAddress   OrderAddress?
+  OrderItem    OrderItem[]
+  OrderAddress OrderAddress?
+
+  transactionId String?
 }
 
 model OrderItem {

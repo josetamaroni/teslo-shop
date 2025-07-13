@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useShallow } from "zustand/shallow";
 import { useCartStore } from "@/store";
 import { currencyFormat } from '@/utils';
-import { Title } from "@/components";
 
 export const OrderSummary = () => {
 

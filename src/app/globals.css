@@ -59,8 +59,11 @@ body {
   @apply bg-gray-400 text-white py-2 px-4 rounded transition-all cursor-not-allowed;
 }
 
-@keyframes bounce-three-times {
+.btn-danger {
+  @apply bg-red-500 hover:bg-red-700 hover:opacity-90 text-white py-2 px-4 transition-all;
+}
 
+@keyframes bounce-three-times {
   0%,
   100% {
     transform: translateY(-25%);

@@ -125,6 +125,8 @@ export const PlaceOrder = () => {
                         and <a href="#" className="underline hover:text-primary">privacy policies</a>
                     </span>
                 </p>
+
+                {/* I’ve read and agreed to the PayPal User Agreement, Privacy Statement and any other policies on PayPal Terms and Conditions. */}
             </div>
         </div>
     )
