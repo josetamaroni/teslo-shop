@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { ProductImage } from "@prisma/client";
 import Image from "next/image";
 import clsx from "clsx";
-import { createUpdateProduct } from "@/actions";
+import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { Category, Gender, Product } from "@/interfaces";
 import { IoTrashOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ interface FormInputs {
     tags: string; // Etiquetas: hoodie, t-shirt, pants, etc.
     gender: Gender;
     categoryId: string;
-    // Todo: images: string[];
+    images?: FileList; // Para manejar la subida de imágenes
 }
 
 //Todo: hay que crear la tabla de sizes en la base de datos y traerla desde ahí
@@ -46,8 +46,7 @@ export const ProductForm = ({ product, categories }: Props) => {
             ...product,
             tags: product.tags?.join(', '),
             sizes: product.sizes ?? [],
-
-            // Todo> falta Imagenes
+            images: undefined, // Para manejar la subida de imágenes
         }
     });
     watch('sizes'); // Para que se actualice el valor en el formulario
@@ -77,7 +76,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     const onSubmit = async (data: FormInputs) => {
         setErrorMessage('');
         const formData = new FormData();
-        const { ...productToSave } = data;
+        const { images, ...productToSave } = data;
 
         if (product.id) {
             formData.append('id', product.id ?? '');
@@ -92,8 +91,15 @@ export const ProductForm = ({ product, categories }: Props) => {
         formData.append('categoryId', productToSave.categoryId);
         formData.append('sizes', productToSave.sizes.toString());
         formData.append('inStock', productToSave.inStock.toString());
-        // formData.append('images', productToSave.images);
 
+        if (images) {
+            // Añadir las imágenes al FormData
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images', images[i]);
+            }
+        }
+
+        console.log(formData.getAll('images'));
         // Server action
         const resp = await createUpdateProduct(formData);
         console.log({ resp });
@@ -107,6 +113,15 @@ export const ProductForm = ({ product, categories }: Props) => {
 
         router.replace(`/admin/product/${resp.product?.slug}`);
     };
+
+    const onDeleteImage = async (imageId: number, imageUrl: string) => {
+        const resp = await deleteProductImage(imageId, imageUrl);
+        if (!resp.ok) {
+            alert(resp.message);
+            return;
+        }
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
             <div className="w-full">
@@ -117,7 +132,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
                 <div className="flex flex-col mb-2">
                     <label htmlFor="slug" className="font-bold">Slug</label>
-                    <input type="text" {...register("slug", { required: true })} className="p-2 border rounded-md bg-gray-200" disabled/>
+                    <input type="text" {...register("slug", { required: true })} className="p-2 border rounded-md bg-gray-200" disabled />
                 </div>
 
                 <div className="flex flex-col mb-2">
@@ -205,9 +220,10 @@ export const ProductForm = ({ product, categories }: Props) => {
                         <label htmlFor="image" className="font-bold">Image</label>
                         <input
                             type="file"
+                            {...register("images")}
                             multiple
                             className="p-2 border rounded-md bg-gray-200"
-                            accept="image/png, image/jpeg"
+                            accept="image/png, image/jpeg, image/avif, image/webp"
                         />
                     </div>
 
@@ -226,7 +242,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
                                     <button
                                         type="button"
-                                        onClick={() => console.log('Delete image', image.id, image.url)}
+                                        onClick={() => onDeleteImage(image.id, image.url)}
                                         className="btn-danger w-full rounded-b flex justify-center items-center">
                                         <IoTrashOutline size={20} className="mr-2" /> Delete
                                     </button>
