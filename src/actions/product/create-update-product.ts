@@ -1,5 +1,4 @@
 'use server'
-import { revalidate } from '@/app/(shop)/page';
 import { auth } from '@/auth.config';
 import prisma from '@/lib/prisma';
 import { Gender, Product, Size } from '@prisma/client';
@@ -85,8 +84,9 @@ export const createUpdateProduct = async (formData: FormData) => {
 
             // Handle Images
             console.log('Handling images...');
-            console.log(formData.getAll('images'));
-            if (formData.getAll('images')) {
+            const imagesArray = formData.getAll('images');
+            console.log({ imagesArray });
+            if (Array.isArray(imagesArray) && imagesArray.length > 0 && imagesArray[0] instanceof File && imagesArray[0].size > 0) {
                 // En caso que se guarde en Cloudinary recibimos un array de archivos EJ: [https:urll.jpg, https:urll2.jpg]
                 // En este caso lo estoy guardando en el servidor en la carpeta public/products
                 const images = await updateImages(formData.getAll('images') as File[]);
