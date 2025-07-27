@@ -7,7 +7,7 @@ export default function LoginPage() {
 
       <h1 className={`${titleFont.className} text-4xl mb-5`}>Sign In</h1>
 
-      {/* Form SignIn*/}
+      {/* Form SignIn */}
       <LoginForm />
     </div>
   );

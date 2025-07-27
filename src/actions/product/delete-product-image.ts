@@ -13,7 +13,7 @@ export const deleteProductImage = async (imageId: number, imageUrl: string) => {
                 throw new Error('Image ID is required');
             }
 
-            // Elimina la imagen de la base de datos
+            //* Elimina la imagen de la base de datos
             const deleteImage = await tx.productImage.delete({
                 where: { id: imageId },
                 select: {
@@ -25,7 +25,7 @@ export const deleteProductImage = async (imageId: number, imageUrl: string) => {
                 }
             });
 
-            // Intenta eliminar el archivo físico
+            //* Intenta eliminar el archivo físico
             const filePath = path.join(process.cwd(), 'public', 'products', imageUrl);
             try {
                 if (!fs.existsSync(filePath)) {
@@ -33,6 +33,7 @@ export const deleteProductImage = async (imageId: number, imageUrl: string) => {
                 }
                 fs.unlinkSync(filePath);
             } catch (fsError) {
+                //? Falta un log de errores
                 throw new Error('Error deleting image file from server');
             }
 
@@ -50,7 +51,7 @@ export const deleteProductImage = async (imageId: number, imageUrl: string) => {
             message: 'Product image deleted successfully'
         }
     } catch (error) {
-        console.error('Error deleting product image:', error);
+        //? Falta un log de errores
         return {
             ok: false,
             message: error instanceof Error ? error.message : 'Error deleting product image'

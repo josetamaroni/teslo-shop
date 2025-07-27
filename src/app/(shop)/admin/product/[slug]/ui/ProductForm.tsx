@@ -9,6 +9,7 @@ import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { Category, Gender, Product } from "@/interfaces";
 import { IoTrashOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface Props {
     product: Partial<Product> & { ProductImage?: ProductImage[] };
@@ -46,11 +47,12 @@ export const ProductForm = ({ product, categories }: Props) => {
             ...product,
             tags: product.tags?.join(', '),
             sizes: product.sizes ?? [],
-            images: undefined, // Para manejar la subida de imágenes
+            images: undefined, //* Para manejar la subida de imágenes
         }
     });
-    watch('sizes'); // Para que se actualice el valor en el formulario
-    // Observar cambios en el título
+    watch('sizes'); //* Para que se actualice el valor en el formulario
+
+    //* Observar cambios en el título
     const title = watch('title');
     useEffect(() => {
         if (title) {
@@ -92,34 +94,31 @@ export const ProductForm = ({ product, categories }: Props) => {
         formData.append('sizes', productToSave.sizes.toString());
         formData.append('inStock', productToSave.inStock.toString());
 
+        //* Añadir las imágenes al FormData
         if (images) {
-            // Añadir las imágenes al FormData
             for (let i = 0; i < images.length; i++) {
                 formData.append('images', images[i]);
             }
         }
 
-        console.log(formData.getAll('images'));
-        // Server action
+        //* Server action
         const resp = await createUpdateProduct(formData);
-        console.log({ resp });
         if (!resp.ok || !resp.product) {
-            //     setErrorMessage(resp.message);
-
-            // ! Cambiar esto por un toast
-            alert('Producto no se pudo actualizar');
+            toast.error(resp.message);
             return;
         }
 
         router.replace(`/admin/product/${resp.product?.slug}`);
+        toast.success(resp.message || 'Product updated successfully');
     };
 
     const onDeleteImage = async (imageId: number, imageUrl: string) => {
         const resp = await deleteProductImage(imageId, imageUrl);
         if (!resp.ok) {
-            alert(resp.message);
+            toast.error(resp.message);
             return;
         }
+        toast.success(resp.message || 'Product updated successfully');
     }
 
     return (

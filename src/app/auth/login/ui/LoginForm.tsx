@@ -1,10 +1,9 @@
 'use client'
 
+import { useActionState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useActionState, useEffect } from 'react';
-import { IoInformationCircleOutline } from 'react-icons/io5';
-
+import { toast } from 'sonner';
 import { authenticate } from '@/actions';
 import clsx from 'clsx';
 
@@ -15,27 +14,19 @@ export const LoginForm = () => {
   const params = searchParams.get('origin') || '/';
   const [state, formAction, isPending] = useActionState(authenticate, undefined);
 
-  // Usar un useEffect para manejar el state y redireccionar a origin
+  //* Usar un useEffect para manejar el state y redireccionar a origin
   useEffect(() => {
     if (state === 'Success') {
+      toast.success(state);
       if (!!params) return window.location.replace(params);
       window.location.href = '/';
+    } else if (state === 'Invalid credentials.' || state === 'Something went wrong.') {
+      toast.error(state);
     }
   }, [state]);
 
-
   return (
     <form action={formAction} className="flex flex-col">
-
-      {state && (
-        <div className="flex items-end space-x-1"
-          aria-live="polite"
-          aria-atomic="true">
-          <IoInformationCircleOutline className="h-5 w-5 text-red-500" />
-          <p className="text-sm text-red-500">{state}</p>
-        </div>
-      )}
-
       <label htmlFor="email">Email</label>
       <input
         className="px-5 py-2 border bg-gray-200 rounded mb-5"

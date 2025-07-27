@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { geistMono, geistSans } from "@/config/fonts";
 import { Providers } from "@/components";
-
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: {
@@ -23,6 +23,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
         <Providers>
+          <Toaster richColors />
           {children}
         </Providers>
       </body>

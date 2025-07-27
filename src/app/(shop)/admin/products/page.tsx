@@ -101,8 +101,8 @@ export default async function ProductsAdminPage({ searchParams }: Props) {
                     </tbody>
                 </table>
 
+                //* Pagination component to handle page navigation */
                 <Pagination totalPages={totalPages} />
-
             </div>
         </>
     );

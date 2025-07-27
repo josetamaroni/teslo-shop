@@ -9,17 +9,14 @@ export async function authenticate(
     formData: FormData,
 ) {
     try {
-        // await new Promise(resolve => setTimeout(resolve, 4000));
-
-        // console.log('Form Data', formData)
         await signIn('credentials', {
             ...Object.fromEntries(formData),
-            redirect: false, // Deshabilitar redirección automática
+            redirect: false, //* Deshabilitar redirección automática
         });
 
         return 'Success';
     } catch (error) {
-        console.error('Error', error);
+        //? Falta un log de errores
         if (error instanceof AuthError) {
             switch (error.type) {
                 case 'CredentialsSignin':
@@ -30,7 +27,6 @@ export async function authenticate(
         } else {
             return 'Something went wrong.';
         }
-        // throw error;
     }
 }
 
@@ -44,8 +40,7 @@ export async function login(email: string, password: string) {
             ok: true
         }
     } catch (error) {
-        // Usar un Logger
-        console.log(error)
+        //? Falta un log de errores
         return {
             ok: false
         }

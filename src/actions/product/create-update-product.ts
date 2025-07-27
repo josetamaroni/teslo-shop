@@ -45,14 +45,13 @@ export const createUpdateProduct = async (formData: FormData) => {
     product.slug = product.slug.toLowerCase().replace(/ /g, '_').trim();
 
     const { id, images, ...restProduct } = product;
-    console.log({restProduct});
 
     try {
         const prismaTx = await prisma.$transaction(async (tx) => {
             let product: Product;
             const tagsArray = restProduct.tags.split(',').map(tag => tag.trim());
-      
-            // Update existing product
+
+            //* Update existing product
             if (id) {
                 product = await tx.product.update({
                     where: { id },
@@ -66,8 +65,8 @@ export const createUpdateProduct = async (formData: FormData) => {
                         }
                     }
                 });
-                // console.log({ updateProduct: product });
-            } else { // Create new product
+            } else { 
+                //* Create new product
                 product = await tx.product.create({
                     data: {
                         ...restProduct,
@@ -79,18 +78,15 @@ export const createUpdateProduct = async (formData: FormData) => {
                         }
                     }
                 });
-                // console.log({ createProduct: product });
             }
 
-            // Handle Images
-            console.log('Handling images...');
+            //* Handle Images
             const imagesArray = formData.getAll('images');
-            console.log({ imagesArray });
+            // console.log({ imagesArray });
             if (Array.isArray(imagesArray) && imagesArray.length > 0 && imagesArray[0] instanceof File && imagesArray[0].size > 0) {
                 // En caso que se guarde en Cloudinary recibimos un array de archivos EJ: [https:urll.jpg, https:urll2.jpg]
                 // En este caso lo estoy guardando en el servidor en la carpeta public/products
                 const images = await updateImages(formData.getAll('images') as File[]);
-                console.log({ images });
                 if (!images || images.length === 0) {
                     throw new Error('No images provided');
                 }
@@ -117,7 +113,7 @@ export const createUpdateProduct = async (formData: FormData) => {
             message: 'Product created/updated successfully',
         }
     } catch (error) {
-        // console.log(error);
+        //? Falta implementar el manejo de log de errores
         return {
             ok: false,
             product: null,
@@ -134,7 +130,6 @@ const updateImages = async (images: File[]) => {
         }
 
         const urls: string[] = [];
-
         for (const f of images) {
             if (typeof f.arrayBuffer === 'function') {
                 const buffer = Buffer.from(await f.arrayBuffer());
@@ -148,7 +143,7 @@ const updateImages = async (images: File[]) => {
         }
         return urls;
     } catch (error) {
-        // console.error('Error updating product image:', error);
+        //? Falta implementar el manejo de log de errores
         throw new Error('Failed to update product image');
     }
 }
